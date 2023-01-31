@@ -3,11 +3,12 @@ package user
 import (
     "fmt"
 
-    "github.com/tenra/go_gin/backend/lib"
+    "github.com/tenra/go_gin/lib"
 )
 
 type User struct {
-    Username string `json:"username"`
+	Id   uint   `json:"id" binding:"required"`
+    Name string `json:"name"`
     Password string `json:"password"`
 }
 

@@ -5,10 +5,10 @@ import (
     "time"
 
     "github.com/gin-gonic/gin"
-    "github.com/tenra/go_gin/backend/article"
-    "github.com/tenra/go_gin/backend/handler"
-    "github.com/tenra/go_gin/backend/lib"
-    "github.com/tenra/go_gin/backend/user"
+    "github.com/tenra/go_gin/promotion"
+    "github.com/tenra/go_gin/handler"
+    "github.com/tenra/go_gin/lib"
+    "github.com/tenra/go_gin/user"
     "github.com/joho/godotenv"
 
     "github.com/gin-contrib/cors"
@@ -22,7 +22,7 @@ func main() {
         }
     }
 
-    article := article.New()
+    promotion := promotion.New()
     user := user.New()
 
     lib.DBOpen()
@@ -32,7 +32,7 @@ func main() {
 
     r.Use(cors.New(cors.Config{
         AllowOrigins: []string{
-            "http://localhost:3000",
+			os.Getenv("FRONT_URL"),
         },
         AllowMethods: []string{
             "POST",
@@ -51,9 +51,9 @@ func main() {
         MaxAge:           24 * time.Hour,
     }))
 
-    r.GET("/article", handler.ArticlesGet(article))
-    r.POST("/article", handler.ArticlePost(article))
+    r.GET("/promotions", handler.Index(promotion))
+    r.POST("/promotions", handler.Create(promotion))
     r.POST("/user/login", handler.UserPost(user))
 
-    r.Run(os.Getenv("HTTP_HOST") + ":" + os.Getenv("HTTP_PORT")) // listen and serve on 0.0.0.0:8080
+    r.Run(os.Getenv("HTTP_HOST") + ":" + os.Getenv("HTTP_PORT"))
 }

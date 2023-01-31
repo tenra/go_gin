@@ -111,7 +111,7 @@ func showUsage() {
     fmt.Println(`
 -------------------------------------
 Usage:
-	go run migration/main.go <command>
+	go run db/main.go <command>
 Commands:
 	new FILENAME  Create new up & down migration files
 	up        Apply up migrations
@@ -126,7 +126,7 @@ func newMigration(name string) {
         fmt.Println("\nerror: migration file name must be supplied as an argument")
         os.Exit(1)
     }
-    base := fmt.Sprintf("./migration/migrations/%s_%s", time.Now().Format("20060102030405"), name)
+    base := fmt.Sprintf("./db/migrations/%s_%s", time.Now().Format("20060102030405"), name)
     ext := ".sql"
     createFile(base + ".up" + ext)
     createFile(base + ".down" + ext)

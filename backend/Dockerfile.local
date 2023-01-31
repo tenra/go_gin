@@ -1,0 +1,8 @@
+FROM golang:latest
+COPY . /go/src/sample
+WORKDIR /go/src/sample
+#RUN go get -u github.com/cosmtrek/air
+RUN go install github.com/cosmtrek/air@latest
+#RUN go get -u github.com/go-delve/delve/cmd/dlv
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+CMD ["air", "-c", ".air.toml"]**
